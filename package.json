@@ -1,0 +1,46 @@
+{
+  "name": "demos",
+  "version": "1.0.0",
+  "description": "all kinds of examples",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --inline --progress --port 8000",
+    "build": "webpack --progress --hide-modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jantoChan/demos.git"
+  },
+  "author": "jantoChan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jantoChan/demos/issues"
+  },
+  "homepage": "https://github.com/jantoChan/demos#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-plugin-transform-vue-jsx": "^3.5.0",
+    "babel-preset-env": "^1.3.2",
+    "babel-preset-stage-2": "^6.22.0",
+    "css-loader": "^0.28.9",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.6",
+    "html-webpack-plugin": "^2.30.1",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.1",
+    "uglifyjs-webpack-plugin": "^1.1.1",
+    "vue": "^2.5.13",
+    "vue-loader": "^13.7.1",
+    "vue-router": "^3.0.1",
+    "vue-style-loader": "^3.0.1",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  }
+}
