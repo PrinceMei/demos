@@ -6,7 +6,11 @@
               <router-link to="/example"></router-link>
             </li>
        -->
-       
+      <li>
+        <router-link to="/lazyLoad">图片懒加载</router-link>
+      </li>
+      
+
     </ul> 
   </div>
 </template>
