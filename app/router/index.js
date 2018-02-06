@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/components/home/index'
 import lazyLoad from '@/components/lazy-load/index'
+import adapter from '@/components/adapter/index'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'lazyLoad',
       component: lazyLoad
+    },
+    {
+      path: '/adapter',
+      name: 'adapter',
+      component: adapter
     }
 
   ]
