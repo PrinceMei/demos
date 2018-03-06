@@ -1,0 +1,168 @@
+// @at-root #{&}__
+// BEM 写法
+body{
+  font-size: 12px;
+  font-family: -apple-system,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Arial,sans-serif;
+  word-break: break-word;
+  text-rendering: optimizeLegibility;
+  color: #333;
+  background-color: #f4f5f5;
+}
+
+#vertical{
+  background-color: #fff;
+  max-width: 700px;
+  padding: 24px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+
+  .box{
+    @at-root #{&}__title{
+      font-size: 18px;
+      color: #0d1a26;
+      font-family: Lato, "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      clear: both;
+      margin-bottom: 0.6em;
+    }
+    @at-root #{&}__demo{
+      border: 1px solid #ebedf0;
+      padding: 42px 24px 50px;
+      color: rgba(0, 0, 0, 0.65);
+    }
+    @at-root #{&}__code{
+      font-size: 13px;
+      margin: 16px 0;
+      overflow: auto;
+      color: black;
+      background: #f2f4f5;
+      font-family: "Lucida Console", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      direction: ltr;
+      text-align: left;
+      white-space: pre;
+      word-spacing: normal;
+      word-break: normal;
+      word-wrap: normal;
+      line-height: 1.2;
+      -moz-tab-size: 4;
+      -o-tab-size: 4;
+      tab-size: 4;
+      -webkit-hyphens: none;
+      -ms-hyphens: none;
+      hyphens: none;
+      border-radius: 2px;
+    }
+  }
+
+  //table-cell
+  .table{
+    display: table-cell;
+    vertical-align: middle;
+    width: 200px;
+    height: 200px;
+    background-color: #1890ff;
+
+    @at-root #{&}-cell{
+      margin-left: auto;
+      margin-right: auto;
+      width: 100px;
+      height: 100px;
+      background-color: #fff;
+    }
+  }
+
+  // flex
+  .flex{
+    width: 200px;
+    height: 200px;
+    background-color: #1890ff;
+    color: #fff;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack:center;
+    -webkit-justify-content:center;
+    -ms-flex-pack:center;
+    justify-content:center;
+  }
+
+  //绝对定位和负边距
+  .position{
+    width: 200px;
+    height: 200px;
+    background-color: #1890ff;
+    color: #fff;
+
+    position: relative;
+
+    @at-root #{&}-child{
+      position: absolute;
+      top:50%;
+      left:50%;
+      width: 100px;
+      height: 100px;
+      margin-left: -50px;
+      margin-top: -50px;
+      background-color: #f8f8f8;
+    }
+  }
+
+  //translate
+  .translate{
+    width: 200px;
+    height: 200px;
+    background-color: #1890ff;
+    color: #fff;
+
+    position: relative;
+
+    @at-root #{&}-child{
+      position: absolute;
+      top:50%;             
+      left:50%;             
+      transform:translate(-50%,-50%);             
+      -webkit-transform:translate(-50%,-50%);             
+      -moz-transform:translate(-50%,-50%);             
+      -ms-transform:translate(-50%,-50%);
+      width: 100px;
+      height: 100px;
+      background-color: #f8f8f8;
+    }
+  }
+
+  //top,bottom,left,right: 0
+  .reset{
+    width: 200px;
+    height: 200px;
+    background-color: #1890ff;
+    color: #fff;
+
+    position: relative;
+    @at-root #{&}-child{
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin:auto;
+      background-color: #f8f8f8;
+    }
+  }
+
+  //line-height
+  .lineHeight{
+    width: 200px;
+    height: 200px;
+    background-color: #1890ff;
+    color: #fff;
+    line-height: 200px;
+    text-align: center;
+  }
+
+}
