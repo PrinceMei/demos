@@ -121,8 +121,7 @@ export default {
             var intersectionRatio = change.intersectionRatio;
             var realSrc= imgItem.getAttribute('data-src');
             var dataSrc= imgItem.getAttribute('src');
-
-            if (intersectionRatio >0 && realSrc != dataSrc) {
+            if (intersectionRatio > 0 && realSrc != dataSrc) {
               //可见范围替换图片地址，并取消监测
               imgItem.setAttribute('src', realSrc);
               observer.unobserve(imgItem);
