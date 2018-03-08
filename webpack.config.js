@@ -64,7 +64,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: resolve('views/index.html'),
-      template: resolve('views/template.html'),
+      template: resolve('index.html'),
       hash: true,
       inject: true
     })
