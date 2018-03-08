@@ -52,3 +52,6 @@ a{
   text-decoration: none;
   color: inherit;
 }
+*, ::after, ::before, :after, :before {
+    box-sizing: border-box;
+}
