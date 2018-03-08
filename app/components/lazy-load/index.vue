@@ -2,7 +2,7 @@
   <div class="lazyLoad">
     <ul class="lazyLoad__list">
       <li class="lazyLoad__list__item" v-for="n in imgList.total">
-        <img :src="bitmapSrc" :data-src="imgList.content.imgItem.src" class="lazyLoad__list__item__img" ref="image">
+        <img :src="bitmapSrc" :data-src="imgList.content.imgItem.src+n" class="lazyLoad__list__item__img" ref="image">
       </li>
     </ul>
   </div>
@@ -58,7 +58,7 @@ export default {
       imgList: {
         content: {
           imgItem: {
-            src: '/app/assets/image/lazyLoad.jpg'
+            src: 'https://picsum.photos/300/300/?image='
           }
         },
         total: 50
@@ -152,8 +152,8 @@ export default {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
   }
 
 </style>
