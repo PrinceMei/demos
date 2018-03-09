@@ -1,26 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 //主页
-import home from '@/components/home/index'
+const home = resolve => {require(["@/components/home/index"], resolve)}
 
 //图片懒加载
-import lazyLoad from '@/components/lazy-load/index'
+const lazyLoad = resolve => {require(["@/components/lazy-load/index"], resolve)}
 
 // 移动端适配
-import adapter from '@/components/adapter/index'
+const adapter = resolve => {require(["@/components/adapter/index"], resolve)}
 
 //css垂直居中
-import verticalCenter from '@/components/vertical-center/index'
+const verticalCenter = resolve => {require(["@/components/vertical-center/index"], resolve)}
 
 //第三方登录github
-import oauthApp from '@/components/oauth-app/index'
+const oauthApp = resolve => {require(["@/components/oauth-app/index"], resolve)}
 
 // cssimage-bus
-import busImage from '@/components/bus-image/index'
+const busImage = resolve => {require(["@/components/bus-image/index"], resolve)}
 
 // css carousels
-
-import cssCarousels from '@/components/css-carousels/index'
+const cssCarousels = resolve => {require(["@/components/css-carousels/index"], resolve)}
 
 Vue.use(Router)
 
