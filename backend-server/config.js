@@ -7,7 +7,6 @@ let config = {
 
   // 服务端 host
   host: 'http://localhost:3000',
-
   // web 开发环境的 host
   webHost: 'http://localhost:8090',
 
@@ -19,6 +18,12 @@ let config = {
     'http://stg-demos.leanapp.cn',
     'http://demos.leanapp.cn'
   ],
+
+  // 线上域名
+  domain: 'demos.leanapp.cn',
+
+  //测试域名
+  webDomain: 'localhost',
 
   //github
   'client_id': '7eb267da27e15f2717b7',

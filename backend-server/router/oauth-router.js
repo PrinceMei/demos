@@ -53,12 +53,12 @@ router.get('/github/callback', async (req, res) => {
           res.body = bodyObj.access_token;
 
           //线上
-          // res.cookie('access_token', bodyObj.access_token, {domain: 'demos.leanapp.cn', path: '/', secure: false, expires: new Date(Date.now() + 900000), httpOnly: false, maxAge:900000 }) ;
+          res.cookie('access_token', bodyObj.access_token, {domain: config.domain, path: '/', secure: false, expires: new Date(Date.now() + 900000), httpOnly: false, maxAge:900000 }) ;
 
           //测试
-          res.cookie('access_token', bodyObj.access_token, {domain: 'localhost', path: '/', secure: false, expires: new Date(Date.now() + 900000), httpOnly: false, maxAge:900000 });
+          // res.cookie('access_token', bodyObj.access_token, {domain: config.webDomain, path: '/', secure: false, expires: new Date(Date.now() + 900000), httpOnly: false, maxAge:900000 });
         }
-        res.redirect('/');
+        res.redirect('/oauth');
     })
     .catch(e => {
         console.log(e);
