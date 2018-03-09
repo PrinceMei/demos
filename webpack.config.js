@@ -14,6 +14,7 @@ module.exports = {
     app: './app/main.js'
   },
   output: {
+    publicPath: '/dist/',
     filename: '[name].js',
     path: resolve('dist')
   },
@@ -60,6 +61,11 @@ module.exports = {
         }
       }
     ]
+  },
+  devServer: {
+    contentBase: resolve('views'),
+    publicPath: "/dist/",
+    port: 8000
   },
   plugins: [
     new HtmlWebpackPlugin({
