@@ -1,22 +1,23 @@
-// webpack.config.js
-
+// webpack.config.base.js
 'use strict'
+const webpack = require('webpack');
 const path = require('path');
-const config = require('./config/index.js')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const config = require('../config');
 
 function resolve (dir) {
-  return path.join(__dirname, './', dir)
+  return path.join(__dirname, '../', dir)
 }
-
 module.exports = {
+  context: path.resolve(__dirname, '../'), //设置代码目录
   entry: {
     app: './app/main.js'
   },
   output: {
-    publicPath: '/dist/',
+    path: config.build.assetsRoot,
     filename: '[name].js',
-    path: resolve('dist')
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -61,20 +62,5 @@ module.exports = {
         }
       }
     ]
-  },
-  devServer: {
-    contentBase: resolve('views'),
-    publicPath: "/dist/",
-    port: 8000
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      filename: resolve('views/index.html'),
-      template: resolve('index.html'),
-      hash: true,
-      inject: true
-    })
-  ]
-
-
+  }
 };
