@@ -21,6 +21,9 @@ const busImage = resolve => {require(["@/components/bus-image/index"], resolve)}
 // css carousels
 const cssCarousels = resolve => {require(["@/components/css-carousels/index"], resolve)}
 
+// pull-down refresh
+const pullDown = resolve => {require(["@/components/pull-down/index"], resolve)}
+
 Vue.use(Router)
 
 export default new Router({
@@ -60,6 +63,11 @@ export default new Router({
       path: '/cssCarousels',
       name: 'cssCarousels',
       component: cssCarousels
+    },
+    {
+      path: '/pullDown',
+      name: 'pullDown',
+      component: pullDown
     }
  ]
 })

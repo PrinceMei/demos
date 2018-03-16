@@ -38,6 +38,10 @@ export default {
         {
           value: '/cssCarousels',
           name: '纯css轮播图'
+        },
+        {
+          value: '/pullDown',
+          name: '下拉刷新'
         }
       ]
     }
