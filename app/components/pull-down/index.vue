@@ -33,7 +33,7 @@
     &__scroll{
       background-color: #fff;
       position: absolute;
-      z-index: 2;
+      z-index: 10;
       width: 100%;
       height: 100%;
       overflow-y: scroll;
@@ -43,13 +43,24 @@
       -webkit-transform: translate3d(0, 0, 0);
       // -webkit-transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
       // transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+      border-bottom: 1px solid #e8e8e8;
+      border-top: 1px solid #e8e8e8;
     } 
     &__list{
       &__item{
         padding: 16px 24px; 
+        position: relative;
 
-        &:not(:last-child) {
-          border-bottom: 1px solid #e8e8e8;
+        &:not(:last-child):after {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 15px;
+          height: 1px;
+          content: '';
+          -webkit-transform: scaleY(.5);
+          transform: scaleY(.5);
+          background-color: #e8e8e8;
         }
       }
     }
@@ -65,6 +76,7 @@
       text-align: center;
       padding: 16px 24px; 
       z-index: 1;
+      background-color: #fff;
 
       &__sign{
         margin-right: 10px;
@@ -93,8 +105,26 @@
           display: block;
           width: 24px;
           height: 24px;
-          background-image: url('Rolling.gif');
+          border: 4px solid #2c3e50;
+          border-right-color: transparent;
+          border-radius: 50%;
+          position: relative;
+          animation: loader-rotate 1s linear infinite;
+          -webkit-animation: loader-rotate 1s linear infinite;
+          top: 50%;
+          margin: -4px auto 0 auto;          
           vertical-align: middle;
+
+          &:after{
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: #2c3e50;
+            border-radius: 50%;
+            position: absolute;
+            top: -1px;
+            left: 13px;
+          }
         }
       }
       &__caption{
@@ -107,7 +137,24 @@
         vertical-align: middle;
       }
     }
-  } 
+  };
+
+  @keyframes loader-rotate {
+    0% {
+      transform: rotate(0); 
+    }
+    100% {
+      transform: rotate(360deg); 
+    } 
+  };
+  @-webkit-keyframes loader-rotate {
+    0% {
+      -webkit-transform: rotate(0); 
+    }
+    100% {
+      -webkit-transform: rotate(360deg); 
+    } 
+  };
 </style>
 
 <script type="text/javascript">
@@ -128,7 +175,7 @@
         _scrollWrap: {},
         _loadingWrap: {},
 
-        randomLength: 15,
+        randomLength: 20,
         randomArray: []
       }
     },
@@ -136,7 +183,7 @@
       var vm= this;
 
       //处理微信露底
-      vm.fixExposed('.pullDown');
+      vm.fixExposed();
 
       vm.randomArray= vm.randomNumber(vm.randomLength);
       vm._scrollWrap= vm.$refs.scroll;
@@ -147,7 +194,6 @@
         var vm= this;
 
         if (!vm.isPull && !vm.isLoading && vm._scrollWrap.scrollTop == vm.offsetTop) {
-
           vm.isPull= true;
           vm.startPos= $event.touches[0].pageY;
         };
@@ -155,7 +201,7 @@
       touchmove($event) {
         var vm= this;
         vm.endPos= $event.touches[0].pageY;
-
+        $event._isScroller= true;
         if (!vm.isLoading && vm.isPull && vm.startPos<vm.endPos) {
           vm.distance= (vm.endPos- vm.startPos)*vm.modulus;
           var offsetLoading= vm._loadingWrap.offsetHeight;
@@ -168,7 +214,7 @@
           vm.moveTransition(vm.$refs.scroll, vm.distance, 0);
         };
       },
-      touchend() {
+      touchend($event) {
         var vm= this;
         var offsetLoading= vm._loadingWrap.offsetHeight;
         vm.isPull= false;
@@ -289,42 +335,16 @@
         vm.distance= 0;
       },
 
-      fixExposed(className) {
-        // 防止内容区域滚到底后引起页面整体的滚动
-        var content = document.querySelector(className);
-        var startY;
+      fixExposed() {
 
-        content.addEventListener('touchstart', function (e) {
-            startY = e.touches[0].clientY;
-        });
-
-        content.addEventListener('touchmove', function (e) {
-            // 高位表示向上滚动
-            // 底位表示向下滚动
-            // 1容许 0禁止
-            var status = '11';
-            var ele = this;
-
-            var currentY = e.touches[0].clientY;
-
-            if (ele.scrollTop === 0) {
-                // 如果内容小于容器则同时禁止上下滚动
-                status = ele.offsetHeight >= ele.scrollHeight ? '00' : '01';
-            } else if (ele.scrollTop + ele.offsetHeight >= ele.scrollHeight) {
-                // 已经滚到底部了只能向上滚动
-                status = '10';
-            }
-
-            if (status != '11') {
-                // 判断当前的滚动方向
-                var direction = currentY - startY > 0 ? '10' : '01';
-                // 操作方向和当前允许状态求与运算，运算结果为0，就说明不允许该方向滚动，则禁止默认事件，阻止滚动
-                if (!(parseInt(status, 2) & parseInt(direction, 2))) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      return;              }
-            }
-        });
+        //此处粗暴的屏蔽除需页面滚动外的事件
+        document.body.addEventListener('touchmove', function(evt) {
+          //In this case, the default behavior is scrolling the body, which
+          //would result in an overflow.  Since we don't want that, we preventDefault.
+          if(!evt._isScroller) {
+            evt.preventDefault();
+          }
+        })
       },
       /**
        * [randomNumber 产生随机数]
