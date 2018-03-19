@@ -11,8 +11,8 @@
         <span v-if="isLoading">正在刷新...</span> 
       </div>
     </div>
-    <div class="pullDown__scroll" ref="scroll">
-      <ul class="pullDown__list" @touchstart= "touchstart" @touchmove="touchmove" @touchend="touchend">
+    <div class="pullDown__scroll" ref="scroll" @touchstart= "touchstart" @touchmove="touchmove" @touchend="touchend">
+      <ul class="pullDown__list">
         <li class="pullDown__list__item">请切换手机模式浏览</li>
         <li class="pullDown__list__item" v-for="n in randomArray">Item {{n}} </li> 
       </ul>
@@ -201,7 +201,6 @@
       touchmove($event) {
         var vm= this;
         vm.endPos= $event.touches[0].pageY;
-        $event._isScroller= true;
         if (!vm.isLoading && vm.isPull && vm.startPos<vm.endPos) {
           vm.distance= (vm.endPos- vm.startPos)*vm.modulus;
           var offsetLoading= vm._loadingWrap.offsetHeight;
@@ -212,12 +211,12 @@
             vm.pullStatus = 'down'
           }
           vm.moveTransition(vm.$refs.scroll, vm.distance, 0);
-        };
+        }
       },
       touchend($event) {
         var vm= this;
         var offsetLoading= vm._loadingWrap.offsetHeight;
-        vm.isPull= false;
+        // vm.isPull= false;
 
         //加载中 或 移动距离小于0不能移动
         if (vm.isLoading || vm.distance<=0 || vm.isBack) {return false;}
@@ -328,6 +327,7 @@
        */
       resetStatus() {
         var vm= this;
+        vm.isPull= false;
         vm.isLoading= false;
         vm.isBack= false;
         vm.startPos= 0;
@@ -336,15 +336,42 @@
       },
 
       fixExposed() {
+        var vm= this;
+        // 防止内容区域滚到底后引起页面整体的滚动
+        var content = document.querySelector('.pullDown__scroll');
+        var startY;
 
-        //此处粗暴的屏蔽除需页面滚动外的事件
-        document.body.addEventListener('touchmove', function(evt) {
-          //In this case, the default behavior is scrolling the body, which
-          //would result in an overflow.  Since we don't want that, we preventDefault.
-          if(!evt._isScroller) {
-            evt.preventDefault();
-          }
-        })
+        content.addEventListener('touchstart', function (e) {
+            startY = e.touches[0].clientY;
+        });
+
+        content.addEventListener('touchmove', function (e) {
+            // 高位表示向上滚动
+            // 底位表示向下滚动
+            // 1容许 0禁止
+            var status = '11';
+            var ele = this;
+
+            var currentY = e.touches[0].clientY;
+
+            if (ele.scrollTop === 0) {
+                // 如果内容小于容器则同时禁止上下滚动
+                status = ele.offsetHeight >= ele.scrollHeight ? '00' : '01';
+            } else if (ele.scrollTop + ele.offsetHeight >= ele.scrollHeight) {
+                // 已经滚到底部了只能向上滚动
+                status = '10';
+            }
+
+            if (status != '11') {
+                // 判断当前的滚动方向
+                var direction = currentY - startY > 0 ? '10' : '01';
+                // 操作方向和当前允许状态求与运算，运算结果为0，就说明不允许该方向滚动，则禁止默认事件，阻止滚动
+                if (!(parseInt(status, 2) & parseInt(direction, 2))) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+            }
+        });
       },
       /**
        * [randomNumber 产生随机数]
