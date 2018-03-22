@@ -1,5 +1,5 @@
 <template>
-  <div class="pullDown">
+  <div class="pullDown" @touchstart= "touchstart" @touchmove="touchmove" @touchend="touchend">
     <div class="pullDown__loading"  ref="loading">
       <div class="pullDown__loading__sign">
         <i class="pullDown__loading__sign__pulldown" :class="{'z-roate': pullStatus=='up'}" v-if="!isLoading"></i>
@@ -11,7 +11,7 @@
         <span v-if="isLoading">正在刷新...</span> 
       </div>
     </div>
-    <div class="pullDown__scroll" ref="scroll" @touchstart= "touchstart" @touchmove="touchmove" @touchend="touchend">
+    <div class="pullDown__scroll" ref="scroll">
       <ul class="pullDown__list">
         <li class="pullDown__list__item">请切换手机模式浏览</li>
         <li class="pullDown__list__item" v-for="n in randomArray">Item {{n}} </li> 
@@ -21,7 +21,7 @@
 </template>
 
 <style type="text/css" lang="scss">
-  .pullDown{
+  #app{
     position: absolute;
     z-index: 2;
     top: 0;
@@ -29,20 +29,25 @@
     left: 0;
     overflow: hidden;
     width: 100%;
+  }
+  .pullDown{
+    background-color: #fff;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    /* 增加该属性，可以增加弹性 */
+    -webkit-overflow-scrolling: touch;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    // -webkit-transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    // transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 
     &__scroll{
-      background-color: #fff;
-      position: absolute;
+      position: relative;
       z-index: 10;
-      width: 100%;
-      height: 100%;
-      overflow-y: scroll;
-      /* 增加该属性，可以增加弹性 */
-      -webkit-overflow-scrolling: touch;
-      transform: translate3d(0, 0, 0);
-      -webkit-transform: translate3d(0, 0, 0);
-      // -webkit-transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-      // transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+      background-color: #fff;
       border-bottom: 1px solid #e8e8e8;
       border-top: 1px solid #e8e8e8;
     } 
@@ -75,7 +80,7 @@
       height: 50px;
       text-align: center;
       padding: 16px 24px; 
-      z-index: 1;
+      z-index: 2;
       background-color: #fff;
 
       &__sign{
@@ -338,7 +343,7 @@
       fixExposed() {
         var vm= this;
         // 防止内容区域滚到底后引起页面整体的滚动
-        var content = document.querySelector('.pullDown__scroll');
+        var content = document.querySelector('.pullDown');
         var startY;
 
         content.addEventListener('touchstart', function (e) {
